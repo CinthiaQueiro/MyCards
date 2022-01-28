@@ -7,6 +7,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-UI", "1-UI", "{77ABE91B-E
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyCards", "UI\MyCards.csproj", "{91E3E1CC-495F-4C82-9D96-217A827BADCA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CoreApiClient", "CoreApiClient\CoreApiClient.csproj", "{08A17633-E690-4453-BC8F-AB58813144EB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,10 @@ Global
 		{91E3E1CC-495F-4C82-9D96-217A827BADCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{91E3E1CC-495F-4C82-9D96-217A827BADCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{91E3E1CC-495F-4C82-9D96-217A827BADCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08A17633-E690-4453-BC8F-AB58813144EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08A17633-E690-4453-BC8F-AB58813144EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08A17633-E690-4453-BC8F-AB58813144EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08A17633-E690-4453-BC8F-AB58813144EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

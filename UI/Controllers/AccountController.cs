@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication;
+﻿using CoreApiClient.Interfaces;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
@@ -6,6 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
+using CoreApiClient.Entities;
+
 
 namespace MyCards.Controllers
 {
@@ -13,10 +16,12 @@ namespace MyCards.Controllers
     public class AccountController : Controller
     {
         private readonly ILogger<AccountController> _logger;
+        private readonly IUserClient _userClient;
 
-        public AccountController(ILogger<AccountController> logger)
+        public AccountController(ILogger<AccountController> logger, IUserClient userClient)
         {
             _logger = logger;
+            _userClient = userClient;
         }
 
         [Route("google-login")]
@@ -27,11 +32,11 @@ namespace MyCards.Controllers
         }
 
         [Route("google-response")]
-        public async Task<IActionResult> GoogleResponse()
+        public async Task<Message<User>> GoogleResponse()
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            var claims = result.Principal.Identities
+            var clains = result.Principal.Identities
                 .FirstOrDefault().Claims.Select(claim => new
                 {
                     claim.Issuer,
@@ -39,8 +44,10 @@ namespace MyCards.Controllers
                     claim.Type,
                     claim.Value
                 });
-
-            return Json(claims);
+            var name = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").FirstOrDefault().Value;
+            var email = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").FirstOrDefault().Value;
+            User user = new User {name = name, email = email};
+            return await _userClient.PostAsync(user);
         }
 
         [HttpPost]
