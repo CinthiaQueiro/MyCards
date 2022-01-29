@@ -8,7 +8,9 @@ using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Threading.Tasks;
 using CoreApiClient.Entities;
-
+using Microsoft.AspNetCore.Http;
+using CoreApiClient.Utility;
+using Newtonsoft.Json;
 
 namespace MyCards.Controllers
 {
@@ -17,11 +19,13 @@ namespace MyCards.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly IUserClient _userClient;
+        private readonly IHttpContextAccessor _session;
 
-        public AccountController(ILogger<AccountController> logger, IUserClient userClient)
+        public AccountController(ILogger<AccountController> logger, IUserClient userClient, IHttpContextAccessor session)
         {
             _logger = logger;
             _userClient = userClient;
+            _session = session;
         }
 
         [Route("google-login")]
@@ -32,7 +36,7 @@ namespace MyCards.Controllers
         }
 
         [Route("google-response")]
-        public async Task<Message<User>> GoogleResponse()
+        public async Task<IActionResult> GoogleResponse()
         {
             var result = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
@@ -47,7 +51,11 @@ namespace MyCards.Controllers
             var name = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").FirstOrDefault().Value;
             var email = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").FirstOrDefault().Value;
             User user = new User {name = name, email = email};
-            return await _userClient.PostAsync(user);
+            User userSession = await _userClient.PostAsync(user);            
+            SessionUtility session = new SessionUtility(_session);
+            session.SetSession("user", JsonConvert.SerializeObject(userSession));
+
+            return RedirectToAction("Index", "Cards");
         }
 
         [HttpPost]
