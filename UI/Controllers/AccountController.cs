@@ -50,12 +50,12 @@ namespace MyCards.Controllers
                 });
             var name = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").FirstOrDefault().Value;
             var email = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").FirstOrDefault().Value;
-            User user = new User {name = name, email = email};
-            User userSession = await _userClient.PostAsync(user);            
+            User user = new User {Name = name, Email = email};
+            Message<User> userSession = await _userClient.PostAsync(user);            
             SessionUtility session = new SessionUtility(_session);
-            session.SetSession("user", JsonConvert.SerializeObject(userSession));
+            session.SetSession("user", JsonConvert.SerializeObject(userSession.Data));
 
-            return RedirectToAction("Index", "Cards");
+            return RedirectToAction("Index", "DeckCards");
         }
 
         [HttpPost]

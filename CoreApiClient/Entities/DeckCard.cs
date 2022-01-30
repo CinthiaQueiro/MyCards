@@ -2,14 +2,13 @@
 
 namespace CoreApiClient.Entities
 {
-    public class User
+    public class DeckCard
     {
         [Key]
         public int Id { get; set; }
 
-        public string Name { get; set; }
-
-        public string Email { get; set; }
+        public User User { get; set; }
+        public string Description { get; set; }
 
     }
 }

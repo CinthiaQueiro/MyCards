@@ -43,6 +43,7 @@ namespace MyCards
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserClient, UserClient>();
             services.AddTransient<SessionUtility, SessionUtility>();
+            services.AddTransient<IDeckCardClient, DeckCardClient>();
 
             services.AddSession(options =>
             {
