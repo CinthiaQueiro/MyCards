@@ -5,6 +5,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="pages\DeckCard.vue" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="pages\DeckCard.vue">
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="wwwroot\libs\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\css\bootstrap.css.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\css\bootstrap.min.css.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.bundle.js" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.js" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.js.map" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.min.js" />
+    <None Include="wwwroot\libs\bootstrap\dist\js\bootstrap.min.js.map" />
+    <None Include="wwwroot\libs\bootstrap\LICENSE" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Google" Version="3.1.22" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />

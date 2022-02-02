@@ -69,8 +69,11 @@ namespace MyCards
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
-
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                ServeUnknownFileTypes = true
+            });
+            app.UseFileServer();
             app.UseRouting();
 
             app.UseAuthentication();

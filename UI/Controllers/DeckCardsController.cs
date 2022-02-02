@@ -15,7 +15,7 @@ using System.Threading.Tasks;
 
 namespace MyCards.Controllers
 {
-    [Authorize]
+    [Route("[controller]")]
     public class DeckCardsController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -31,11 +31,18 @@ namespace MyCards.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Index()
         {
-            //recover user 
+            return View();
+        }
+
+        [HttpGet]
+        [Route("GetDeckCards")]
+
+        public async Task<List<DeckCard>> GetDeckCards()
+        {   //recover user 
             SessionUtility session = new SessionUtility(_session);
             User user = JsonConvert.DeserializeObject<User>(session.GetSession("user"));
-            var decks = await _deckCard.GetDeckCardsUser(user.Id);
-            return View(decks);
+            var decks = (await _deckCard.GetDeckCardsUser(user.Id)).Data;
+            return decks;
         }
 
     }

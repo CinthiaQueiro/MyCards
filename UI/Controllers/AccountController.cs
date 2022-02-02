@@ -54,17 +54,9 @@ namespace MyCards.Controllers
             Message<User> userSession = await _userClient.PostAsync(user);            
             SessionUtility session = new SessionUtility(_session);
             session.SetSession("user", JsonConvert.SerializeObject(userSession.Data));
-
             return RedirectToAction("Index", "DeckCards");
         }
 
-        [HttpPost]
-        [Route("SaveUser")]
-        public async void SaveUser([FromBody] object user)
-        {
-            var teste = "oi";
-           // return (await _contatoClient.ConsultaIdentificador(identificador, int.Parse(_user.OperacaoId))).Data;
-        }
 
     }
 }
