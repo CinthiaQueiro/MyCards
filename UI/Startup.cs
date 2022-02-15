@@ -1,4 +1,6 @@
+using AutoMapper;
 using CoreApiClient.Clients;
+using CoreApiClient.Entities;
 using CoreApiClient.Interfaces;
 using CoreApiClient.Utility;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -8,7 +10,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 using System;
+using UI.Mapper;
+using UI.ViewModel;
 
 namespace MyCards
 {
@@ -24,8 +29,21 @@ namespace MyCards
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
+            services.AddControllers(options =>
+            {
+                options.EnableEndpointRouting = true;
 
+            }).AddNewtonsoftJson(options => {
+                options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+                options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+            });
+            services.AddControllersWithViews().AddNewtonsoftJson();
+            services.AddRazorPages().AddNewtonsoftJson();
+            var config = new AutoMapper.MapperConfiguration(cfg => {
+                cfg.AddProfile(new ViewModelProfile());
+            });
+            IMapper mapper = config.CreateMapper();
+            services.AddSingleton(mapper);
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
@@ -51,6 +69,7 @@ namespace MyCards
                 options.Cookie.Name = ".Fiver.Session";
                 options.IdleTimeout = TimeSpan.FromHours(1);
             });
+          
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -69,22 +88,23 @@ namespace MyCards
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            
+           
+            app.UseDefaultFiles();
             app.UseStaticFiles(new StaticFileOptions
             {
                 ServeUnknownFileTypes = true
             });
             app.UseFileServer();
+           
             app.UseRouting();
-
             app.UseAuthentication();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-
             });
         }
     }

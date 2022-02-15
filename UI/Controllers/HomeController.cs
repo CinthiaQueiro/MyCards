@@ -23,7 +23,8 @@ namespace MyCards.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return RedirectToAction("google-login", "Account");
+            //return RedirectToAction("google-login", "Account");
+            return View();
         }
 
         public IActionResult Privacy()

@@ -1,6 +1,7 @@
 const websiteUrl = location.origin + location.pathname.replace(/\/$/, '');
 
 const apiUrl = websiteUrl + '/../DeckCards';
+const apiLogin = websiteUrl + '/../Account';
 
 const auth = {
   redirectToLogin(returnUrl) {
@@ -38,5 +39,28 @@ const api = {
     } catch {
       return null;
     }
-  }
+  },
+  saveDeck(deck) {
+    return this.ajax({
+        type: "POST",
+        url: `${apiUrl}/SaveDeck`,
+        dataType:"json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(deck)
+    });
+  },
+  async saveLogin(user) {
+    try {
+      return this.ajax({
+        type: "POST",
+        contentType: 'application/json',
+        crossDomain: true,
+        url: `${apiLogin}/SaveLogin`,
+        dataType: "json",
+        data: JSON.stringify(user)
+      });
+    } catch {
+      return null;
+    }
+    }
 };

@@ -1,4 +1,5 @@
 const store = {
-  myUser: null
+    myUser: null,
+    loadUser: false
 };
 Vue.prototype.$store = store;

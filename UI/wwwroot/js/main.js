@@ -14,7 +14,11 @@ Vue.mixin({
 const router = new VueRouter({
 	routes: [
 		{
-			path: '/', component: httpVueLoader('../pages/DeckCard.vue')
+			path: '/', component: httpVueLoader('pages/Route.vue'), children: [
+				{ path: '', name: 'login', component: httpVueLoader('pages/Login.vue') },
+				{ path: '/DeckCards',name:"decks", component: httpVueLoader('pages/DeckCard.vue') }
+
+			]
 		},
 	],
 	linkExactActiveClass: 'active'
@@ -29,7 +33,7 @@ router.beforeEach(async (to, from, next) => {
 var app = new Vue({
 	el: '#app',
 	router: router,
-	created() {
+	async created() {
 		store.language = 'pt-br';
 		this.$localizer.loadFile(store.language);		
 	}

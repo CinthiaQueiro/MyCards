@@ -1,17 +1,15 @@
-﻿using CoreApiClient.Entities;
+﻿using AutoMapper;
+using CoreApiClient.Entities;
 using CoreApiClient.Interfaces;
 using CoreApiClient.Utility;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using MyCards.Models;
 using Newtonsoft.Json;
-using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
+using UI.ViewModel;
 
 namespace MyCards.Controllers
 {
@@ -21,18 +19,19 @@ namespace MyCards.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IHttpContextAccessor _session;
         private readonly IDeckCardClient _deckCard;
-        public DeckCardsController(ILogger<HomeController> logger, IHttpContextAccessor session, IDeckCardClient deckCard)
+        private readonly IMapper _mapper;
+        public DeckCardsController(ILogger<HomeController> logger, 
+            IHttpContextAccessor session, 
+            IDeckCardClient deckCard,
+            IMapper mapper)
         {
             _logger = logger;
             _session = session;
             _deckCard = deckCard;
+            _mapper = mapper;
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> Index()
-        {
-            return View();
-        }
+       
 
         [HttpGet]
         [Route("GetDeckCards")]
@@ -40,9 +39,25 @@ namespace MyCards.Controllers
         public async Task<List<DeckCard>> GetDeckCards()
         {   //recover user 
             SessionUtility session = new SessionUtility(_session);
-            User user = JsonConvert.DeserializeObject<User>(session.GetSession("user"));
-            var decks = (await _deckCard.GetDeckCardsUser(user.Id)).Data;
+            var sessao = session.GetSession("user");
+            List<DeckCard> decks = new List<DeckCard>();
+            if (session.GetSession("user") == null)
+            {
+                RedirectToAction("google-login", "Account");
+            } else
+            {
+                User user = JsonConvert.DeserializeObject<User>(session.GetSession("user"));
+                decks = (await _deckCard.GetDeckCardsUser(user.Id)).Data;
+            }
+                   
             return decks;
+        }
+
+        [HttpPost("SaveDeck")]
+        public async Task<Message<DeckCard>> SaveDeck([FromBody] DeckCard deckCard)
+        {
+            var retorno = await _deckCard.PostMessageAsync<DeckCard>("SaveDeck", deckCard);
+            return retorno;
         }
 
     }

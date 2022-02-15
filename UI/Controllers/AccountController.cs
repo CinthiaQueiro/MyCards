@@ -28,8 +28,8 @@ namespace MyCards.Controllers
             _session = session;
         }
 
-        [Route("google-login")]
-        public IActionResult GoogleLogin()
+        [Route("Login")]
+        public IActionResult Login()
         {
             var properties = new AuthenticationProperties { RedirectUri = Url.Action("GoogleResponse") };
             return Challenge(properties, GoogleDefaults.AuthenticationScheme);
@@ -54,7 +54,18 @@ namespace MyCards.Controllers
             Message<User> userSession = await _userClient.PostAsync(user);            
             SessionUtility session = new SessionUtility(_session);
             session.SetSession("user", JsonConvert.SerializeObject(userSession.Data));
-            return RedirectToAction("Index", "DeckCards");
+            // return JsonConvert.SerializeObject(userSession.Data);
+            return View();
+        }
+
+        [HttpPost]
+        [Route("SaveLogin")]
+        public  async Task<Message<User>> SaveLogin([FromBody] User user)
+        {
+            Message<User> userSession = await _userClient.PostAsync(user);
+            SessionUtility session = new SessionUtility(_session);
+            session.SetSession("user", JsonConvert.SerializeObject(userSession.Data));
+            return userSession;
         }
 
 
