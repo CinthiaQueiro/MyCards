@@ -60,5 +60,19 @@ namespace MyCards.Controllers
             return retorno;
         }
 
+        [HttpPost("EditDeckCard")]
+        public async Task<Message<DeckCard>> EditDeckCard([FromBody] DeckCard deckCard)
+        {
+            var retorno = await _deckCard.PostMessageAsync<DeckCard>("EditDeckCard", deckCard);
+            return retorno;
+        }
+
+        [HttpPost("DeleteDeckCard")]
+        public async Task<Message<DeckCard>> DeleteDeckCard([FromBody] DeckCard deckCard)
+        {
+            var retorno = await _deckCard.PostMessageAsync<DeckCard>("DeleteDeckCard", deckCard);
+            return retorno;
+        }
+
     }
 }

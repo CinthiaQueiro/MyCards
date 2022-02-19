@@ -1,4 +1,10 @@
 {
   "pt-br": "Portuguese(Brazil)",
-  "en": "English(United States)"
+  "en": "English(United States)",
+  "no": "No",
+  "yes": "Sim",
+  "excludedeck": "Do you really want to delete the deck?",
+  "salvando": "saving",
+  "decksaved": "deck saved successfully",
+  "deckdeleted": "deck removed successfully"
 }

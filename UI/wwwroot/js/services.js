@@ -49,6 +49,24 @@ const api = {
         data: JSON.stringify(deck)
     });
   },
+  editDeckCard(deck) {
+    return this.ajax({
+        type: "POST",
+        url: `${apiUrl}/EditDeckCard`,
+        dataType:"json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(deck)
+    });
+  },
+  deleteDeckCard(deck) {
+    return this.ajax({
+        type: "POST",
+        url: `${apiUrl}/DeleteDeckCard`,
+        dataType:"json",
+        contentType: "application/json; charset=utf-8",
+        data: JSON.stringify(deck)
+    });
+  },
   async saveLogin(user) {
     try {
       return this.ajax({
@@ -62,5 +80,16 @@ const api = {
     } catch {
       return null;
     }
+  },
+    async getMyUser() {
+    try {
+        return await this.ajax({
+            type: "GET",
+            url: `${apiLogin}/GetMyUser`,
+            dataType: "json"
+        });
+    } catch {
+        return null;
     }
+  }
 };

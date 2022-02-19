@@ -1,4 +1,10 @@
 {
   "pt-br": "Português(Brasil)",
-  "en": "Inglês(Estados Unidos)"
+  "en": "Inglês(Estados Unidos)",
+  "no": "Não",
+  "yes": "Sim",
+  "excludedeck": "Deseja realmente excluir o baralho?",
+  "salvando": "saving",
+  "decksaved": "Baralho salvo com sucesso",
+  "deckdeleted": "Baralho deletado."
 }

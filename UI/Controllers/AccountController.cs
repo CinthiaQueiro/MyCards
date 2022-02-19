@@ -50,8 +50,8 @@ namespace MyCards.Controllers
                 });
             var name = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name").FirstOrDefault().Value;
             var email = clains.Where(c => c.Type == "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress").FirstOrDefault().Value;
-            User user = new User {Name = name, Email = email};
-            Message<User> userSession = await _userClient.PostAsync(user);            
+            User user = new User { Name = name, Email = email };
+            Message<User> userSession = await _userClient.PostAsync(user);
             SessionUtility session = new SessionUtility(_session);
             session.SetSession("user", JsonConvert.SerializeObject(userSession.Data));
             // return JsonConvert.SerializeObject(userSession.Data);
@@ -60,12 +60,21 @@ namespace MyCards.Controllers
 
         [HttpPost]
         [Route("SaveLogin")]
-        public  async Task<Message<User>> SaveLogin([FromBody] User user)
+        public async Task<Message<User>> SaveLogin([FromBody] User user)
         {
             Message<User> userSession = await _userClient.PostAsync(user);
             SessionUtility session = new SessionUtility(_session);
             session.SetSession("user", JsonConvert.SerializeObject(userSession.Data));
             return userSession;
+        }
+
+        [HttpGet]
+        [Route("GetMyUser")]
+        public User GetMyUser()
+        {
+            SessionUtility session = new SessionUtility(_session);
+            User user = JsonConvert.DeserializeObject<User>(session.GetSession("user"));
+            return user;
         }
 
 
