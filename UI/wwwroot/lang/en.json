@@ -4,7 +4,10 @@
   "no": "No",
   "yes": "Sim",
   "excludedeck": "Do you really want to delete the deck?",
-  "salvando": "saving",
-  "decksaved": "deck saved successfully",
-  "deckdeleted": "deck removed successfully"
+  "salvando": "Saving",
+  "decksaved": "Deck Saved Successfully",
+  "deckdeleted": "Deck Removed Successfully",
+  "estudar": "To Study",
+  "excluirbaralho": "Delete Deck",
+  "adicionarcard": "Add Card"
 }

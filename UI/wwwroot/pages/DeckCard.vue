@@ -1,5 +1,5 @@
 <template>
-  <div class="pb-5">
+  <div class="pb-5 container">
       <button type="button" class="btn btn-primary" @click="createDeckCard">Adicionar novo Baralho</button>
       <ul>
           <li v-for="card in deckCards" @click.stop.prevent="deckCardEdit($event,card.id)" class="list-group-item d-flex justify-content-between align-items-start">
@@ -16,9 +16,13 @@
           </li>
       </ul>
       <ul class="edit list-group" @mouseleave="closeEdit">
-          <li class="list-group-item" @click="deleteDeckCard">Excluir baralho</li>
+          <li class="list-group-item">
+              <router-link :to="'/Cards'">{{$localizer('estudar')}}</router-link>
+          </li>
+          <li class="list-group-item" @click.prevent.stop="deleteDeckCard">{{$localizer('excluirbaralho')}}</li>
       </ul>
       <modal-create-deck-cards :is-open="createDeckCards" @is-open="createDeckCards=$event" @deck-saved="deckSaved($event)"></modal-create-deck-cards>
+      <div class="addCard" :title="$localizer('adicionarcard')"><router-link :to="'/CreateCard'"><i class="icon-plus"></i></router-link></div>
   </div>
 </template>
 
@@ -111,8 +115,7 @@ module.exports = {
           }
       }
   },
-  created(){
-      console.log('Load data');
+  created(){     
      this.loadData();
   }
 }
@@ -127,6 +130,10 @@ module.exports = {
     .list-group-item:hover {
         background-color:#ccc;
     }
+    .list-group-item a {
+        color: black;
+        text-decoration:none;
+    }
     .edit {
         position: absolute;
         display: none;
@@ -138,5 +145,28 @@ module.exports = {
     .saving i {
         color: green;
         font-size:1.2em;
+    }
+    .addCard {        
+        display: flex;
+        justify-content: flex-end;
+        position: absolute;
+        top: 0px;
+        right: 1%;
+        font-size: 0.8em;
+        color: white;
+        border-radius: 100%;
+        border: 1px solid blue;
+        background-color: blue;
+        padding: 0.6%;
+    }
+    .addCard:hover {
+        cursor: pointer;
+    }
+    .addCard a {
+        color: white;
+        text-decoration: none;
+    }
+    .container {
+        position: relative;
     }
 </style>

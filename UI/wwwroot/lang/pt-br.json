@@ -4,7 +4,10 @@
   "no": "Não",
   "yes": "Sim",
   "excludedeck": "Deseja realmente excluir o baralho?",
-  "salvando": "saving",
-  "decksaved": "Baralho salvo com sucesso",
-  "deckdeleted": "Baralho deletado."
+  "salvando": "Saving",
+  "decksaved": "Baralho Salvo Com Sucesso",
+  "deckdeleted": "Baralho deletado.",
+  "estudar": "Estudar",
+  "excluirbaralho": "Excluir baralho",
+  "adicionarcard":  "Adicionar Card"
 }
