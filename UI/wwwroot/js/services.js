@@ -1,18 +1,19 @@
 const websiteUrl = location.origin + location.pathname.replace(/\/$/, '');
 
-const apiUrl = websiteUrl + '/../DeckCards';
+const apiUrlDecks = websiteUrl + '/../DeckCards';
+const apiUrlCards = websiteUrl + '/../Cards';
 const apiLogin = websiteUrl + '/../Account';
 
 const auth = {
   redirectToLogin(returnUrl) {
     const redirectUri = `/admin/#${returnUrl}`;
-    location.href = `${apiUrl}/Login?ReturnUrl=${encodeURIComponent(redirectUri)}`;
+    location.href = `${apiUrlDecks}/Login?ReturnUrl=${encodeURIComponent(redirectUri)}`;
   },
     redirectToLogout() {
         if (this.$store.hasContatoInAtendimento) {
             $.notify(this.$localizer("haAtendimentosEmAberto"), 'warn');
         } else {
-            location.href = `${apiUrl}/logout`;            
+            location.href = `${apiUrlDecks}/logout`;            
         }
     },
 
@@ -33,7 +34,7 @@ const api = {
     try {
       return await this.ajax({
         type: "GET",
-        url: `${apiUrl}/GetDeckCards`,
+        url: `${apiUrlDecks}/GetDeckCards`,
         dataType: "json"
       });
     } catch {
@@ -43,7 +44,7 @@ const api = {
   saveDeck(deck) {
     return this.ajax({
         type: "POST",
-        url: `${apiUrl}/SaveDeck`,
+        url: `${apiUrlDecks}/SaveDeck`,
         dataType:"json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(deck)
@@ -52,7 +53,7 @@ const api = {
   editDeckCard(deck) {
     return this.ajax({
         type: "POST",
-        url: `${apiUrl}/EditDeckCard`,
+        url: `${apiUrlDecks}/EditDeckCard`,
         dataType:"json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(deck)
@@ -61,7 +62,7 @@ const api = {
   deleteDeckCard(deck) {
     return this.ajax({
         type: "POST",
-        url: `${apiUrl}/DeleteDeckCard`,
+        url: `${apiUrlDecks}/DeleteDeckCard`,
         dataType:"json",
         contentType: "application/json; charset=utf-8",
         data: JSON.stringify(deck)
@@ -91,5 +92,14 @@ const api = {
     } catch {
         return null;
     }
-  }
+  },
+    saveCard(card) {
+        return this.ajax({
+            type: "POST",
+            url: `${apiUrlCards}/SaveCard`,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(card)
+        });
+    }
 };

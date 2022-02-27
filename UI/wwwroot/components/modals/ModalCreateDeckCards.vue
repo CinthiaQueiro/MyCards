@@ -39,7 +39,6 @@
                 let objectDeck = { description: this.description, User: { id: this.$store.myUser.id}};                
                 api.saveDeck(objectDeck).then(d => {
                     thisVue.description = "";
-                    console.log('retorno ', d);
                     thisVue.$emit("deck-saved", d);
                 });
             }

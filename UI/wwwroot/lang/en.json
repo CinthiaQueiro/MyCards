@@ -9,5 +9,14 @@
   "deckdeleted": "Deck Removed Successfully",
   "estudar": "To Study",
   "excluirbaralho": "Delete Deck",
-  "adicionarcard": "Add Card"
+  "adicionarcard": "Add Card",
+  "addimagem": "Add Image",
+  "addaudio": "Add audio",
+  "pergunta": "Question",
+  "resposta": "Resposta",
+  "selecionebaralho": "Select a Deck",
+  "versionchrome": "Excuse me! This feature requires Chrome 47 or higher.",
+  "audiodriver": "Please check if you have audio driver installed and allow microphone usage.",
+  "erro": "Error!",
+  "cardsaved": "Card Saved!"
 }

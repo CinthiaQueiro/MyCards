@@ -62,6 +62,7 @@ namespace MyCards
             services.AddTransient<IUserClient, UserClient>();
             services.AddTransient<SessionUtility, SessionUtility>();
             services.AddTransient<IDeckCardClient, DeckCardClient>();
+            services.AddTransient<ICardClient, CardClient>();
 
             services.AddSession(options =>
             {

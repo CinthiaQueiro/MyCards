@@ -9,5 +9,14 @@
   "deckdeleted": "Baralho deletado.",
   "estudar": "Estudar",
   "excluirbaralho": "Excluir baralho",
-  "adicionarcard":  "Adicionar Card"
+  "adicionarcard": "Adicionar Card",
+  "addimagem": "Adicionar Imagem",
+  "addaudio": "Adicionar áudio",
+  "pergunta": "Pergunta",
+  "resposta": "Resposta",
+  "selecionebaralho": "Selecione um Baralho",
+  "versionchrome": "Desculpe! Esta funcionalidade requer Chrome 47 ou superior.",
+  "audiodriver": "Favor verificar se possui driver de áudio instalado e permitir uso do microfone.",
+  "erro": "Erro!",
+  "cardsaved": "Card Salvo!"
 }

@@ -1,4 +1,5 @@
-﻿using CoreApiClient.Interfaces;
+﻿using CoreApiClient.Entities;
+using CoreApiClient.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace MyCards.Controllers
 {
-    [Authorize]
+    [Route("[controller]")]
     public class CardsController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -28,6 +29,13 @@ namespace MyCards.Controllers
         {
             // return await _cardsClient.Get(user);
             return View();
+        }
+
+        [HttpPost("SaveCard")]
+        public async Task<Message<Card>> SaveCard([FromBody] Card card)
+        {
+            var retorno = await _cardsClient.PostMessageAsync<Card>("SaveCard", card);
+            return retorno;
         }
 
     }

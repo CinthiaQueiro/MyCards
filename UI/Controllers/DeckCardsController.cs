@@ -29,13 +29,10 @@ namespace MyCards.Controllers
             _session = session;
             _deckCard = deckCard;
             _mapper = mapper;
-        }
-
-       
+        }       
 
         [HttpGet]
         [Route("GetDeckCards")]
-
         public async Task<List<DeckCard>> GetDeckCards()
         {   //recover user 
             SessionUtility session = new SessionUtility(_session);

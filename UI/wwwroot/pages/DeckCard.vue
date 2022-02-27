@@ -85,7 +85,6 @@ module.exports = {
           this.createDeckCards = true;
       },
       deckSaved(deckCard) {
-          console.log('chegou ', deckCard);
           if (deckCard.isSuccess) {
               app.$notyf.success(app.$localizer("decksaved"));
               this.deckCards.unshift(deckCard.data);
@@ -152,12 +151,12 @@ module.exports = {
         position: absolute;
         top: 0px;
         right: 1%;
-        font-size: 0.8em;
+        font-size: 0.5em;
         color: white;
         border-radius: 100%;
         border: 1px solid blue;
         background-color: blue;
-        padding: 0.6%;
+        padding: 0.8%;
     }
     .addCard:hover {
         cursor: pointer;

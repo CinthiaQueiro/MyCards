@@ -11,7 +11,7 @@ namespace CoreApiClient.Clients
 {
     public class CardClient : ApiClientBase<Card>, ICardClient
     {
-        public override string _url { get; set; } = "api/User/";
+        public override string _url { get; set; } = "api/Card/";
 
         public CardClient(IConfiguration configuration, SessionUtility sessionUtility) : base(configuration, sessionUtility)
         {
