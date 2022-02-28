@@ -9,6 +9,6 @@ namespace CoreApiClient.Interfaces
 
         Task<Message<User>> Get(string email);
         //Task<Message<User>> Post(string name, string email);
-
+        Task<Message<List<Card>>> GetCards(int idDeckCard);
     }
 }

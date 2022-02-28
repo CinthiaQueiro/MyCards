@@ -101,5 +101,25 @@ const api = {
             contentType: "application/json; charset=utf-8",
             data: JSON.stringify(card)
         });
+    },
+    async getCards(idDeckCards) {
+        try {
+            return await this.ajax({
+                type: "GET",
+                url: `${apiUrlCards}/GetCards/${idDeckCards}`,
+                dataType: "json"
+            });
+        } catch {
+            return null;
+        }
+    },
+    updateCard(card) {
+        return this.ajax({
+            type: "POST",
+            url: `${apiUrlCards}/UpdateCard`,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(card)
+        });
     }
 };

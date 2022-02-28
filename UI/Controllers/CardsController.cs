@@ -38,5 +38,19 @@ namespace MyCards.Controllers
             return retorno;
         }
 
+        [HttpGet]
+        [Route("GetCards/{idDeckCards}")]
+        public async Task<Message<List<Card>>> GetCards(int idDeckCards)
+        {  
+            return await _cardsClient.GetCards(idDeckCards);
+        }
+
+        [HttpPost("UpdateCard")]
+        public async Task<Message<Card>> UpdateCard([FromBody] Card card)
+        {
+            var retorno = await _cardsClient.PostMessageAsync<Card>("UpdateCard", card);
+            return retorno;
+        }
+
     }
 }

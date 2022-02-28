@@ -21,5 +21,10 @@ namespace CoreApiClient.Clients
         {
             return await GetMessageAsync<User>($"Get/{email}");
         }
+
+        public async Task<Message<List<Card>>> GetCards(int idDeckCards)
+        {
+            return await GetMessageAsync<List<Card>>($"GetCards/{idDeckCards}");
+        }
     }
 }

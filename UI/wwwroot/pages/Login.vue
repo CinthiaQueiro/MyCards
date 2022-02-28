@@ -1,6 +1,13 @@
 <template>
-    <div class="pb-5">
-        <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+    <div class="container pb-5">
+        <div class="row">
+            <div class="col col-12 p-2 m-2">
+                <img src="../images/deck_cards4.png"/><label class="titlesite">My Cards</label>
+            </div>
+            <div class="col col-12 p-2 m-2">
+                <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"></div>
+            </div>
+        </div>
     </div>
 </template>
 
@@ -34,5 +41,15 @@ module.exports = {
     }
     .list-group-item:hover {
         background-color:#ccc;
+    }
+    .container {
+        height: 700px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .titlesite {
+        font-size: 1.5rem;
+        font-family: 'Hubballi'
     }
 </style>

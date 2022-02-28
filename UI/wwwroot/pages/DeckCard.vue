@@ -16,8 +16,8 @@
           </li>
       </ul>
       <ul class="edit list-group" @mouseleave="closeEdit">
-          <li class="list-group-item">
-              <router-link :to="'/Cards'">{{$localizer('estudar')}}</router-link>
+          <li class="list-group-item" @click.prevent.stop="openListCards">
+              {{$localizer('estudar')}}
           </li>
           <li class="list-group-item" @click.prevent.stop="deleteDeckCard">{{$localizer('excluirbaralho')}}</li>
       </ul>
@@ -76,6 +76,9 @@ module.exports = {
                           break;
                   }
               });
+      },
+      openListCards() {
+          window.location.href = `/#/Cards/${this.idDeskCardEdit}`;
       },
       deckCardEdit(event, id) {
           this.idDeskCardEdit = id;
