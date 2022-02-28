@@ -8,7 +8,7 @@
         <label class="description">
             {{$localizer('pergunta')}}:
             <span class="attachment">
-                <button @click="openOptionsAttachment($event, 'question')" class="btn btn-light"><i class="icon-attachment"></i></button>
+                <button @click.stop.prevent="openOptionsAttachment($event, 'question')" class="btn btn-light"><i class="icon-attachment"></i></button>
             </span>
         </label>
 
@@ -37,7 +37,7 @@
         <label class="description">
             {{$localizer('resposta')}}:
             <span class="attachment">
-                <button @click="openOptionsAttachment($event, 'answer')" class="btn btn-light"><i class="icon-attachment"></i></button>
+                <button @click.stop.prevent="openOptionsAttachment($event, 'answer')" class="btn btn-light"><i class="icon-attachment"></i></button>
             </span>
         </label>
 
@@ -60,8 +60,11 @@
             <input id="attachmentButtonAnswer" type="file" v-on:change="attachmentImage($event ,'answer')" />
             <img class="attachmentimg" :src="dataAnswer" />
         </div>
-        <div class="saveCard" v-show="dataQuestion != '' && dataAnswer != '' && deckCard != ''">
-            <button class="btn btn-success" @click="saveCard">Salvar</button>
+        <div class="saveCard" >
+            <button class="btn btn-primary">
+                <router-link to="/DeckCards">Voltar</router-link>
+            </button>
+            <button v-show="dataQuestion != '' && dataAnswer != '' && deckCard != ''" class="btn btn-success" @click="saveCard">Salvar</button>
         </div>
         <ul class="optionsAttachment list-group" @mouseleave="closeOptions">
             <li class="list-group-item" @click="showAttachmentImg">
@@ -122,18 +125,18 @@ module.exports = {
           }
       },
       showAttachmentImg() {
-          if (this.isQuestion) this.typeQuestion = "IMG"; else this.typeAnswer = "IMG";         
-          this.showAttachmentImageQuestion = !this.showAttachmentImageQuestion;
-          this.showAttachmentImageAnswer = !this.showAttachmentImageAnswer;
-          this.showAttachmentAudioQuestion = false;
-          this.showAttachmentAudioAnswer = false;
+          if (this.isQuestion) this.typeQuestion = "IMG"; else this.typeAnswer = "IMG";
+          if (this.isQuestion) this.showAttachmentImageQuestion = !this.showAttachmentImageQuestion;
+          if (!this.isQuestion) this.showAttachmentImageAnswer = !this.showAttachmentImageAnswer;
+          if (this.isQuestion) this.showAttachmentAudioQuestion = false;
+          if (!this.isQuestion) this.showAttachmentAudioAnswer = false;
       },
       showAttachmentAudio() {
           if (this.isQuestion) this.typeQuestion = "AUDIO"; else this.typeAnswer = "AUDIO";         
-          this.showAttachmentAudioQuestion = !this.showAttachmentAudioQuestion;
-          this.showAttachmentAudioAnswer = !this.showAttachmentAudioAnswer;
-          this.showAttachmentImageQuestion = false;
-          this.showAttachmentImageAnswer = false;
+          if (this.isQuestion)this.showAttachmentAudioQuestion = !this.showAttachmentAudioQuestion;
+          if (!this.isQuestion)this.showAttachmentAudioAnswer = !this.showAttachmentAudioAnswer;
+          if (this.isQuestion) this.showAttachmentImageQuestion = false;
+          if (!this.isQuestion) this.showAttachmentImageAnswer = false;
       },
 
       openOptionsAttachment(event, type) {
@@ -274,7 +277,7 @@ module.exports = {
           var reader = new FileReader();
           reader.readAsDataURL(audioBlob);
           reader.onloadend = function () {
-              if (thisVue.isQuestion) thisVue.dataQuestion = reader.result; else this.dataAnswer = reader.result;
+              if (thisVue.isQuestion) thisVue.dataQuestion = reader.result; else thisVue.dataAnswer = reader.result;
           }
           
       },
@@ -340,5 +343,9 @@ module.exports = {
     .saveCard {
         display: flex;
         justify-content: flex-end;
+    }
+    .btn-primary a {
+        color: white;
+        text-decoration: none;
     }
 </style>

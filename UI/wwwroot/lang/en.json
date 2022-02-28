@@ -18,5 +18,9 @@
   "versionchrome": "Excuse me! This feature requires Chrome 47 or higher.",
   "audiodriver": "Please check if you have audio driver installed and allow microphone usage.",
   "erro": "Error!",
-  "cardsaved": "Card Saved!"
+  "cardsaved": "Card Saved!",
+  "facil": "Easy",
+  "medio": "Medium",
+  "dificil": "Hard",
+  "mostrarresposta": "Show Answer"
 }
