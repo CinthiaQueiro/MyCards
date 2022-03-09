@@ -22,5 +22,6 @@
   "facil": "Easy",
   "medio": "Medium",
   "dificil": "Hard",
-  "mostrarresposta": "Show Answer"
+  "mostrarresposta": "Show Answer",
+  "tentarEmail": "Trying to login via email"
 }

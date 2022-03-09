@@ -44,20 +44,6 @@ namespace MyCards
             });
             IMapper mapper = config.CreateMapper();
             services.AddSingleton(mapper);
-            services.AddAuthentication(options =>
-            {
-                options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            })
-            .AddCookie(options =>
-            {
-                options.LoginPath = "/account/google-login"; // Must be lowercase
-            })
-            .AddGoogle(options =>
-            {
-                options.ClientId = "1004139561983-jnk68700g5lr2qdfcl0bhlci4um78jeq.apps.googleusercontent.com";
-                options.ClientSecret = "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";
-            });
-
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IUserClient, UserClient>();
             services.AddTransient<SessionUtility, SessionUtility>();
@@ -99,8 +85,6 @@ namespace MyCards
             app.UseFileServer();
            
             app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

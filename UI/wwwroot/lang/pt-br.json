@@ -22,5 +22,6 @@
   "facil": "Fácil",
   "medio": "Médio",
   "dificil": "Difícil",
-  "mostrarresposta": "Mostrar Resposta"
+  "mostrarresposta": "Mostrar Resposta",
+  "tentarEmail": "Tentar através do e-mail"
 }

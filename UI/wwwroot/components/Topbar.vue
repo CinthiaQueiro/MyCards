@@ -7,12 +7,10 @@
 		<div class="sessionUser">
 			
 			<div class="btn-group">
-				<button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
-					<img src="images/myPerfil.png" /><span class="nameUser">{{nameUser}}</span>
+				<button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+					<span class="nameUser">{{nameUser}}</span>
 				</button>
 				<ul class="dropdown-menu">
-					<li><a class="dropdown-item" href="#">Editar Perfil</a></li>
-					<li><hr class="dropdown-divider"></li>
 					<li>
 						<button class="dropdown-item" @click="signOut">
 							Logout
@@ -39,13 +37,17 @@
 		},
 		methods: {
 			signOut() {
-                console.log("signOut");
 				var auth2 = gapi.auth2.getAuthInstance();
 				var thisVue = this;
                 auth2.signOut().then(function () {
-					console.log('User signed out.');
-					thisVue.myUser = null;
-                    thisVue.$router.push("/login");
+					console.log('User signed out.');                  
+                    cookieStore.getAll().then(cookies => cookies.forEach(cookie => {
+                        console.log('Cookie deleted:', cookie);
+                        cookieStore.delete(cookie.name);
+					}));
+					thisVue.$store.loadUser = false;
+					thisVue.$store.myUser = null;
+                    window.location.href = websiteUrl + "/#/login";
                 });
             }
         }

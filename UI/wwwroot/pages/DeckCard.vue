@@ -42,7 +42,7 @@ module.exports = {
   },
   methods: {
       loadData() {
-          api.getMyUser().then(u => { this.$store.myUser = u; });
+          api.getMyUser().then(u => {this.$store.myUser = u; });
           api.getDeckCards().then(c => { this.deckCards = c});
       },
       closeEdit() {

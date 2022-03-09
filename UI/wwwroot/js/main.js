@@ -15,10 +15,11 @@ const router = new VueRouter({
 	routes: [
 		{
 			path: '/', component: httpVueLoader('pages/Route.vue'), children: [
-				{ path: '', name: 'login', component: httpVueLoader('pages/Login.vue') },
-				{ path: '/DeckCards', name: "decks", component: httpVueLoader('pages/DeckCard.vue') },
-				{ path: '/CreateCard', name: "createCard", component: httpVueLoader('pages/CreateCard.vue') },
-				{ path: '/Cards/:id', name: "toStudyCards", component: httpVueLoader('pages/Cards.vue') }	
+				{ path: '/login', name: 'login', component: httpVueLoader('pages/Login.vue') },
+				{ path: '/deckCards', name: "decks", component: httpVueLoader('pages/DeckCard.vue') },
+				{ path: '/createCard', name: "createCard", component: httpVueLoader('pages/CreateCard.vue') },
+				{ path: '/cards/:id', name: "toStudyCards", component: httpVueLoader('pages/Cards.vue') },
+				{ path: '/loginEmail', name: 'loginEmail', component: httpVueLoader('pages/LoginEmail.vue') },
 			]
 		},
 	],
@@ -27,7 +28,13 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
 	store.loading = true;
-	next();
+
+	if (to.path == "/login" && store.myUser != null) {
+		next({ path: `/deckCards` });
+	} else {
+		next();
+    }
+
 	store.loading = false;
 });
 

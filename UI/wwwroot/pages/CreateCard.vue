@@ -344,6 +344,9 @@ module.exports = {
         display: flex;
         justify-content: flex-end;
     }
+    .btn-primary {
+        margin-right: 2px;
+    }
     .btn-primary a {
         color: white;
         text-decoration: none;
