@@ -116,6 +116,7 @@ namespace CoreApiClient.Clients
                 response.EnsureSuccessStatusCode();
                 var data = await response.Content.ReadAsStringAsync();
                 retorno = JsonConvert.DeserializeObject<Message<TEntity>>(data);
+                retorno.ReturnMessage += " teste " + reqUrl;
             }
             catch (Exception ex)
             {
