@@ -23,5 +23,6 @@
   "medio": "Médio",
   "dificil": "Difícil",
   "mostrarresposta": "Mostrar Resposta",
-  "tentarEmail": "Tentar através do e-mail"
+  "tentarEmail": "Login via e-mail",
+  "usuarioteste": "Login com usuário teste"
 }

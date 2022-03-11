@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="showCard && card != null" class="card" style="width: 98%;">
+        <div v-if="showCard && card != null" class="card p-3" style="width: 98%;">
             <img v-if="card.idTypeQuestion == 2" :src=card.dataQuestion class="card-img-top">
             <audio controls v-else-if="card.idTypeQuestion == 3">
                 <source v-bind:src="card.dataQuestion" type="audio/mp3" />
@@ -11,7 +11,7 @@
                 <button href="#" @click="showAnswer" class="btn btn-primary">{{$localizer('mostrarresposta')}}</button>
             </div>
         </div>
-        <div v-if="!showCard && card != null" class="card" style="width: 98%;">
+        <div v-if="!showCard && card != null" class="card p-3" style="width: 98%;">
             <img v-if="card.idTypeAnswer == 2" :src=card.dataAnswer class="card-img-top">
             <audio controls v-else-if="card.idTypeAnswer == 3">
                 <source v-bind:src="card.dataAnswer" type="audio/mp3" />
@@ -83,11 +83,11 @@ module.exports = {
     .card {
         width: 98%;
         align-items: center;
-        min-height: 600px;
+        min-height: 420px;
     }
     .card img {
-        height: 600px;
-        width: 600px;
+        height: 400px;
+        width: 400px;
     }
     .turnback {
         position: absolute;

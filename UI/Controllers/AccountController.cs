@@ -11,6 +11,7 @@ using CoreApiClient.Entities;
 using Microsoft.AspNetCore.Http;
 using CoreApiClient.Utility;
 using Newtonsoft.Json;
+using System;
 
 namespace MyCards.Controllers
 {
@@ -70,13 +71,24 @@ namespace MyCards.Controllers
 
         [HttpGet]
         [Route("GetMyUser")]
-        public User GetMyUser()
+        public Message<User> GetMyUser()
         {
-            SessionUtility session = new SessionUtility(_session);
-            User user = JsonConvert.DeserializeObject<User>(session.GetSession("user"));
-            return user;
+            Message<User> msgUser = new Message<User>();
+            try
+            {
+                SessionUtility session = new SessionUtility(_session);
+                User user = JsonConvert.DeserializeObject<User>(session.GetSession("user"));
+                msgUser.IsSuccess = true;
+                msgUser.Data = user;
+                return msgUser;
+            }
+            catch(Exception e)
+            {
+                msgUser.IsSuccess = false;
+                msgUser.ReturnMessage = e.Message;
+                return msgUser;
+            }
         }
-
 
     }
 }

@@ -6,13 +6,15 @@
 				<router-view></router-view>
 			</main>
 		</div>
+		<footer-site></footer-site>
 	</div>
 </template>
 
 <script>
 module.exports = {
     components: {
-        Topbar: httpVueLoader('components/Topbar.vue')
+		Topbar: httpVueLoader('components/Topbar.vue'),
+		FooterSite: httpVueLoader('components/Footer.vue')
     }
 }
 </script>

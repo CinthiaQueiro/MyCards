@@ -19,17 +19,21 @@
             <input v-model="dataQuestion" :disabled="typeQuestion == 'AUDIO' || typeQuestion == 'IMG'" type="text" class="form-control" placeholder="" aria-label="">
         </div>
 
-        <div class="row" v-show="showAttachmentAudioQuestion && isQuestion">
-            <div class="col-1 align-self-center"><button class="btn btn-light" @click="recordMessage"><i :class="[{ recording: recording, pulse: pulse && recording}, 'icon-mic']"></i></button></div>
-            <div class="col-1 align-self-center"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
-            <div class="col-1" v-if="audioUrl.length > 0">
-                <audio controls>
-                    <source v-bind:src="audioUrl" type="audio/mp3" />
-                    seu navegador não suporta HTML5
-                </audio>
+        <div class="row" v-show="showAttachmentAudioQuestion">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="recordMessage"><i :class="[{ recording: recording, pulse: pulse && recording}, 'icon-mic']"></i></button></div>
+                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
+                    <div class="col-1" v-if="audioUrl.length > 0">
+                        <audio controls>
+                            <source v-bind:src="audioUrl" type="audio/mp3" />
+                            seu navegador não suporta HTML5
+                        </audio>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row" v-show="showAttachmentImageQuestion && isQuestion">
+        <div class="row" v-show="showAttachmentImageQuestion">
             <input id="attachmentButtonQuestion" type="file" v-on:change="attachmentImage($event,'question')" />
             <img class="attachmentimg" :src="dataQuestion" />
         </div>
@@ -42,30 +46,39 @@
         </label>
 
         <div class="input-group mb-3">
-            <span class="input-group-text edit"></span>
+            <span class="input-group-text edit">
+                <button @click="editText" class="btn btn-light"><i class="icon-pencil" title="editar"></i></button>
+            </span>
             <input v-model="dataAnswer" :disabled="typeAnswer == 'AUDIO' || typeAnswer == 'IMG'" type="text" class="form-control" placeholder="" aria-label="">
         </div>
 
-        <div class="row" v-show="showAttachmentAudioAnswer && !isQuestion">
-            <div class="col-1 align-self-center"><button class="btn btn-light" @click="recordMessage"><i :class="[{ recording: recording, pulse: pulse && recording}, 'icon-mic']"></i></button></div>
-            <div class="col-1 align-self-center"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
-            <div class="col-1" v-if="audioUrl.length > 0">
-                <audio controls>
-                    <source v-bind:src="audioUrl" type="audio/mp3" />
-                    seu navegador não suporta HTML5
-                </audio>
+        <div class="row" v-show="showAttachmentAudioAnswer">            
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="recordMessage"><i :class="[{ recording: recording, pulse: pulse && recording}, 'icon-mic']"></i></button></div>
+                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
+                    <div class="col-1" v-if="audioUrl.length > 0">
+                        <audio controls>
+                            <source v-bind:src="audioUrl" type="audio/mp3" />
+                            seu navegador não suporta HTML5
+                        </audio>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="row" v-show="showAttachmentImageAnswer && !isQuestion">
+
+        <div class="row" v-show="showAttachmentImageAnswer">
             <input id="attachmentButtonAnswer" type="file" v-on:change="attachmentImage($event ,'answer')" />
             <img class="attachmentimg" :src="dataAnswer" />
         </div>
+
         <div class="saveCard" >
             <button class="btn btn-primary">
                 <router-link to="/DeckCards">Voltar</router-link>
             </button>
             <button v-show="dataQuestion != '' && dataAnswer != '' && deckCard != ''" class="btn btn-success" @click="saveCard">Salvar</button>
         </div>
+
         <ul class="optionsAttachment list-group" @mouseleave="closeOptions">
             <li class="list-group-item" @click="showAttachmentImg">
                 {{$localizer('addimagem')}}
@@ -95,7 +108,7 @@ module.exports = {
         isQuestion: false,
         recording: false,
         timerInterval: null,
-        timeLimit: 5,
+        timeLimit: 60,
         timePassed: 0,
         mediaRecorder: null,
         audioChunks: [],

@@ -23,5 +23,6 @@
   "medio": "Medium",
   "dificil": "Hard",
   "mostrarresposta": "Show Answer",
-  "tentarEmail": "Trying to login via email"
+  "tentarEmail": "Login with email",
+  "usuarioteste": "Login with user test"
 }

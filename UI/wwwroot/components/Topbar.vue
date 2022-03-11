@@ -37,18 +37,16 @@
 		},
 		methods: {
 			signOut() {
-				var auth2 = gapi.auth2.getAuthInstance();
-				var thisVue = this;
-                auth2.signOut().then(function () {
-					console.log('User signed out.');                  
-                    cookieStore.getAll().then(cookies => cookies.forEach(cookie => {
-                        console.log('Cookie deleted:', cookie);
-                        cookieStore.delete(cookie.name);
-					}));
-					thisVue.$store.loadUser = false;
-					thisVue.$store.myUser = null;
-                    window.location.href = websiteUrl + "/#/login";
-                });
+				if (gapi.auth2 != undefined) {
+					var auth2 = gapi.auth2.getAuthInstance();
+                    auth2.signOut().then(function () {
+                        console.log('User signed out.');
+                    });
+				}
+                this.$store.loadUser = false;
+                this.$store.myUser = null;
+                this.$actions.setCache("user", null);
+                window.location.href = websiteUrl + "/#/login";				
             }
         }
 	}

@@ -10,9 +10,9 @@
                   </div>
                   <div v-show="idDeskCardEdit == card.id && saving" class="fw-bold saving"><i class="icon-spinner"><span>{{$localizer('saving')}}...</span></i></div>
               </div>
-              <span class="badge bg-success rounded-pill">{{card.easy}}</span>
-              <span class="badge bg-primary rounded-pill">{{card.medium}}</span>
-              <span class="badge bg-danger rounded-pill">{{card.hard}}</span>
+              <span class="badge bg-success rounded-pill" :title="$localizer('facil')">{{card.easy}}</span>
+              <span class="badge bg-primary rounded-pill" :title="$localizer('medio')">{{card.medium}}</span>
+              <span class="badge bg-danger rounded-pill" :title="$localizer('dificil')">{{card.hard}}</span>
           </li>
       </ul>
       <ul class="edit list-group" @mouseleave="closeEdit">
@@ -42,7 +42,14 @@ module.exports = {
   },
   methods: {
       loadData() {
-          api.getMyUser().then(u => {this.$store.myUser = u; });
+          api.getMyUser().then(u => {
+              if (u.isSuccess) {
+                  this.$store.myUser = u;
+              } else {
+                  this.$actions.setCache("user", null);
+                  window.location.href = websiteUrl + "/#/login";
+              }
+          });
           api.getDeckCards().then(c => { this.deckCards = c});
       },
       closeEdit() {
@@ -82,7 +89,7 @@ module.exports = {
       },
       deckCardEdit(event, id) {
           this.idDeskCardEdit = id;
-          $(".edit").css({ top: event.clientY, left: event.clientX, display: "block" });
+          $(".edit").css({ top: event.clientY - 100, left: event.clientX - 50, display: "block" });
       },
       createDeckCard() {
           this.createDeckCards = true;

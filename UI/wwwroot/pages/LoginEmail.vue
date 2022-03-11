@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="container">
+    <div class="container p-3">
         <div class="input-group mb-3">
             <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon1">@</span>
@@ -37,6 +37,7 @@
                 var thisVue = this;
                 api.saveLogin(this.$store.myUser).then(s => {
                     if (s.isSuccess) {
+                        thisVue.$actions.setCache("user", s.data);
                         thisVue.$store.myUser = s.data;
                         thisVue.$router.push("/deckCards");
                     }

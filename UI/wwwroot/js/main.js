@@ -28,8 +28,8 @@ const router = new VueRouter({
 
 router.beforeEach(async (to, from, next) => {
 	store.loading = true;
-
-	if (to.path == "/login" && store.myUser != null) {
+	if (to.path == "/login" && actions.getCache("user") != null) {
+		store.myUser = actions.getCache("user");
 		next({ path: `/deckCards` });
 	} else {
 		next();

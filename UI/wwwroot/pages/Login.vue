@@ -2,13 +2,16 @@
     <div class="container pb-5">
         <div class="row">
             <div class="col col-12 p-2 m-2">
-                <img src="../images/deck_cards4.png" /><label class="titlesite">My Cards</label>
+                <img src="../images/deck_cards3.png" /><label class="titlesite">My Cards</label>
             </div>
-            <div class="col col-12 p-2 m-2">
+            <div class="col col-12 p-2 m-2 login">
                 <div id="g-signin2" data-theme="dark"></div>
-            </div>
-            <div class="col col-12 p-2 m-2">
-                <div ><router-link to="/loginEmail">{{$localizer('tentarEmail')}}</router-link></div>
+                <button class="btn btn-primary p-1" style="display:none">
+                    <router-link to="/loginEmail">{{$localizer('tentarEmail')}}</router-link>
+                </button>
+                <button class="btn btn-primary p-1" @click="loginTest">
+                    {{$localizer('usuarioteste')}}
+                </button>
             </div>
         </div>
     </div>
@@ -40,6 +43,7 @@ module.exports = {
           var thisVue = this;
           api.saveLogin(this.$store.myUser).then(s => {
               if (s.isSuccess) {
+                  thisVue.$actions.setCache("user", s.data);
                   thisVue.$store.myUser = s.data;
                   thisVue.$router.push("/deckCards");
               }
@@ -53,6 +57,19 @@ module.exports = {
               console.log('User signed out.');
               auth2.disconnect();
               window.location.href = websiteUrl;
+          });
+      },
+      loginTest() {
+          var user = { Name: "User teste", Email: "userteste@teste.com" };
+          this.$store.myUser = user;
+          this.$store.loadUser = true;
+          var thisVue = this;
+          api.saveLogin(this.$store.myUser).then(s => {
+              if (s.isSuccess) {
+                  thisVue.$actions.setCache("user", s.data);
+                  thisVue.$store.myUser = s.data;
+                  thisVue.$router.push("/deckCards");
+              }
           });
       }
   },
@@ -86,5 +103,16 @@ module.exports = {
     .titlesite {
         font-size: 1.5rem;
         font-family: 'Hubballi'
+    }
+    .btn-primary a {
+        color: white;
+        text-decoration: none;
+    }
+    .btn-primary {
+        margin-left: 5px;
+    }
+    .login {
+        display: flex;
+        justify-content: flex-start;
     }
 </style>
