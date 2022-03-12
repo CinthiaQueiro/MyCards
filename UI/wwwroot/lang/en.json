@@ -24,5 +24,9 @@
   "dificil": "Hard",
   "mostrarresposta": "Show Answer",
   "tentarEmail": "Login with email",
-  "usuarioteste": "Login with user test"
+  "usuarioteste": "Login with user test",
+  "createcard": "Create Deck",
+  "nome": "Name",
+  "fechar": "Close",
+  "salvar": "Salvar"
 }

@@ -3,18 +3,18 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Create Deck</h5>
+                    <h5 class="modal-title">{{$localizer('createcard')}}</h5>
                     <button type="button" class="btn-close" @click="$emit('is-open', !isOpen)" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon1">Nome</span>
-                        <input v-model="description" type="text" class="form-control" placeholder="Nome" aria-label="Nome" aria-describedby="basic-addon1">
+                        <span class="input-group-text" id="basic-addon1">{{$localizer('nome')}}</span>
+                        <input v-model="description" type="text" class="form-control" :placeholder="$localizer('nome')" aria-label="Nome" aria-describedby="basic-addon1">
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" @click="$emit('is-open', !isOpen)" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" @click="$emit('is-open', !isOpen);saveDeck()">Save changes</button>
+                    <button type="button" class="btn btn-secondary" @click="$emit('is-open', !isOpen)" data-bs-dismiss="modal">{{$localizer('fechar')}}</button>
+                    <button type="button" class="btn btn-primary" @click="$emit('is-open', !isOpen);saveDeck()">{{$localizer('salvar')}}</button>
                 </div>
             </div>
         </div>

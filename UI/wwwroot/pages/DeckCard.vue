@@ -22,7 +22,7 @@
           <li class="list-group-item" @click.prevent.stop="deleteDeckCard">{{$localizer('excluirbaralho')}}</li>
       </ul>
       <modal-create-deck-cards :is-open="createDeckCards" @is-open="createDeckCards=$event" @deck-saved="deckSaved($event)"></modal-create-deck-cards>
-      <div class="addCard" :title="$localizer('adicionarcard')"><router-link :to="'/CreateCard'"><i class="icon-plus"></i></router-link></div>
+      <div class="addCard" v-show="deckCards.length > 0" :title="$localizer('adicionarcard')"><router-link :to="'/CreateCard'"><i class="icon-plus"></i></router-link></div>
   </div>
 </template>
 
@@ -44,7 +44,7 @@ module.exports = {
       loadData() {
           api.getMyUser().then(u => {
               if (u.isSuccess) {
-                  this.$store.myUser = u;
+                  this.$store.myUser = u.data;
               } else {
                   this.$actions.setCache("user", null);
                   window.location.href = websiteUrl + "/#/login";

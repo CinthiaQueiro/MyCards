@@ -24,5 +24,9 @@
   "dificil": "Difícil",
   "mostrarresposta": "Mostrar Resposta",
   "tentarEmail": "Login via e-mail",
-  "usuarioteste": "Login com usuário teste"
+  "usuarioteste": "Login com usuário teste",
+  "createcard": "Criar Baralho",
+  "nome": "Nome",
+  "fechar": "Fechar",
+  "salvar": "Salvar"
 }

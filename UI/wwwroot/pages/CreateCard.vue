@@ -340,6 +340,7 @@ module.exports = {
     }
     .attachmentimg {
         width: 200px;
+        max-height: 200px;
     }
     .recording {
         color: red;
