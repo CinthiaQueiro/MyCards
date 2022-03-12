@@ -19,9 +19,9 @@
             </audio>
             <label v-else>{{card.dataAnswer}}</label>
             <div class="card-body">
-                <button @click="setDateShow('easy')" class="btn btn-success">{{$localizer('facil')}}</button>
-                <button @click="setDateShow('medium')" class="btn btn-primary">{{$localizer('medio')}}</button>
-                <button @click="setDateShow('hard')" class="btn btn-danger">{{$localizer('dificil')}}</button>
+                <button @click="setDateShow('easy')" class="btn btn-success">{{$localizer('facil')}} - {{timeRepeat("easy")}}</button>
+                <button @click="setDateShow('medium')" class="btn btn-primary">{{$localizer('medio')}} - {{timeRepeat("medium")}}</button>
+                <button @click="setDateShow('hard')" class="btn btn-danger">{{$localizer('dificil')}} -  {{timeRepeat("hard")}}</button>
             </div>
         </div>
         <button class="btn btn-primary turnback">
@@ -50,6 +50,21 @@ module.exports = {
               }
           });
       },
+      timeRepeat(typeCard) {
+          var classification = this.card.classification.find(c => { return c.description == typeCard });
+          var txtTimeRepeat = "";
+          txtTimeRepeat += classification.repeatTime;          
+          switch (classification.type) {
+              case 'd':
+                  txtTimeRepeat += " " + this.$localizer("dia") + "(s)";
+                  break;
+              case 'h':
+                  txtTimeRepeat += " " + this.$localizer("hora") + "(s)";
+                  break;
+          }
+
+          return txtTimeRepeat;
+      }, 
       showAnswer() {
           this.showCard = !this.showCard;
       },
