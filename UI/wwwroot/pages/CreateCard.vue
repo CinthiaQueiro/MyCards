@@ -22,11 +22,17 @@
         <div class="row" v-show="showAttachmentAudioQuestion">
             <div class="col-6">
                 <div class="row">
-                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="recordMessage"><i :class="[{ recording: recording, pulse: pulse && recording}, 'icon-mic']"></i></button></div>
-                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
-                    <div class="col-1" v-if="audioUrl.length > 0">
-                        <audio controls>
-                            <source v-bind:src="audioUrl" type="audio/mp3" />
+                    <div class="col-1 align-self-center recording">
+                        <button class="btn btn-light" @click="recordMessage">
+                            <i :class="[{ recording: recording && isQuestion, pulse: pulse && recording && isQuestion}, 'icon-mic']">
+                            </i>
+                            <span v-show="recording && isQuestion">{{formattedTimeLeft}}</span>
+                        </button>                        
+                    </div>
+                    <div class="col-1 align-self-center recording"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
+                    <div class="col-1" v-if="audioQuestionUrl.length > 0">
+                        <audio controls :key="audioQuestionUrl">
+                            <source :src="audioQuestionUrl" type="audio/mp3" />
                             seu navegador não suporta HTML5
                         </audio>
                     </div>
@@ -55,11 +61,16 @@
         <div class="row" v-show="showAttachmentAudioAnswer">            
             <div class="col-6">
                 <div class="row">
-                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="recordMessage"><i :class="[{ recording: recording, pulse: pulse && recording}, 'icon-mic']"></i></button></div>
-                    <div class="col-1 align-self-center"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
-                    <div class="col-1" v-if="audioUrl.length > 0">
-                        <audio controls>
-                            <source v-bind:src="audioUrl" type="audio/mp3" />
+                    <div class="col-1 align-self-center recording">
+                        <button class="btn btn-light" @click="recordMessage">
+                            <i :class="[{ recording: recording && !isQuestion, pulse: pulse && recording && !isQuestion}, 'icon-mic']"></i>
+                            <span v-show="recording && !isQuestion">{{formattedTimeLeft}}</span>
+                        </button>
+                    </div>
+                    <div class="col-1 align-self-center recording"><button class="btn btn-light" @click="cancelAudioCard"><i class="icon-stop2"></i></button></div>
+                    <div class="col-1" v-if="audioAnwserUrl.length > 0">
+                        <audio controls :key="audioAnwserUrl">
+                            <source :src="audioAnwserUrl" type="audio/mp3" />
                             seu navegador não suporta HTML5
                         </audio>
                     </div>
@@ -113,8 +124,24 @@ module.exports = {
         mediaRecorder: null,
         audioChunks: [],
         pulse: false,
-        audioUrl:""
+        audioQuestionUrl: "",
+        audioAnwserUrl: ""
     };
+  },
+  computed: {
+      timeLeft: function () {
+          return this.timeLimit - this.timePassed
+      },
+      formattedTimeLeft: function () {
+          const timeLeft = this.timeLeft;
+          const minutes = Math.floor(timeLeft / 60);
+          let seconds = timeLeft % 60;
+          if (seconds < 10) {
+              seconds = `0${seconds}`
+          }
+          // The output in MM:SS format
+          return `${minutes}:${seconds}`
+      }
   },
   methods: {
       loadData() {
@@ -251,7 +278,7 @@ module.exports = {
                       thisVue.mediaRecorder.start();
 
                       thisVue.audioChunks = [];
-                      thisVue.mediaRecorder.addEventListener("dataavailable", event => {                         
+                      thisVue.mediaRecorder.addEventListener("dataavailable", event => {                        
                           thisVue.audioChunks.push(event.data);
                       });
 
@@ -285,14 +312,14 @@ module.exports = {
           thisVue.timerInterval = null;
           thisVue.timePassed = 0;
           thisVue.recording = false;
-          const audioBlob = new Blob(thisVue.audioChunks);
-          thisVue.audioUrl = URL.createObjectURL(audioBlob);
+          let audioBlob = new Blob(thisVue.audioChunks);
+          if (thisVue.isQuestion) thisVue.audioQuestionUrl = URL.createObjectURL(audioBlob);
+          if (!thisVue.isQuestion) thisVue.audioAnwserUrl = URL.createObjectURL(audioBlob);
           var reader = new FileReader();
           reader.readAsDataURL(audioBlob);
           reader.onloadend = function () {
               if (thisVue.isQuestion) thisVue.dataQuestion = reader.result; else thisVue.dataAnswer = reader.result;
-          }
-          
+          }          
       },
       cancelAudioCard: function () {
           this.mediaRecorder.stop();
@@ -364,5 +391,8 @@ module.exports = {
     .btn-primary a {
         color: white;
         text-decoration: none;
+    }
+    .recording {
+        min-width: 60px;
     }
 </style>

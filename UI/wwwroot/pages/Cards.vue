@@ -2,7 +2,7 @@
     <div>
         <div v-if="showCard && card != null" class="card p-3" style="width: 98%;">
             <img v-if="card.idTypeQuestion == 2" :src=card.dataQuestion class="card-img-top">
-            <audio controls v-else-if="card.idTypeQuestion == 3">
+            <audio controls v-else-if="card.idTypeQuestion == 3" :key="card.dataQuestion">
                 <source v-bind:src="card.dataQuestion" type="audio/mp3" />
                 seu navegador não suporta HTML5
             </audio>
@@ -13,7 +13,7 @@
         </div>
         <div v-if="!showCard && card != null" class="card p-3" style="width: 98%;">
             <img v-if="card.idTypeAnswer == 2" :src=card.dataAnswer class="card-img-top">
-            <audio controls v-else-if="card.idTypeAnswer == 3">
+            <audio controls v-else-if="card.idTypeAnswer == 3" :key="card.dataAnswer">
                 <source v-bind:src="card.dataAnswer" type="audio/mp3" />
                 seu navegador não suporta HTML5
             </audio>
