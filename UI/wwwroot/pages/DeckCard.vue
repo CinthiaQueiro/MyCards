@@ -6,7 +6,7 @@
               <div class="ms-2 me-auto">
                   <div v-show="(idDeskCardEdit != card.id)" class="fw-bold">{{card.description}}</div>
                   <div v-show="idDeskCardEdit == card.id && !saving" class="input-group mb-6">
-                      <input @keyup="editDeckCard(card)" v-model="card.description" type="text" class="form-control" value="card.description" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                      <input @keyup="editDeckCard(card)" v-model="card.description" type="text" class="form-control" value="card.description" placeholder="Description" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
                   <div v-show="idDeskCardEdit == card.id && saving" class="fw-bold saving"><i class="icon-spinner"><span>{{$localizer('saving')}}...</span></i></div>
               </div>

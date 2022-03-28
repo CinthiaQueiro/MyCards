@@ -14,7 +14,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" @click="$emit('is-open', !isOpen)" data-bs-dismiss="modal">{{$localizer('fechar')}}</button>
-                    <button type="button" class="btn btn-primary" @click="$emit('is-open', !isOpen);saveDeck()">{{$localizer('salvar')}}</button>
+                    <button v-show="!saving" type="button" class="btn btn-primary" @click="$emit('is-open', !isOpen);saveDeck()">{{$localizer('salvar')}}</button>
+                    <div v-show="saving" class="fw-bold saving"><i class="icon-spinner"><span>{{$localizer('saving')}}...</span></i></div>
                 </div>
             </div>
         </div>
@@ -26,7 +27,8 @@
         props: ["isOpen"],
         data: function () {
             return {
-                description: ""
+                description: "",
+                saving: false
             };
         },
         methods: {
@@ -36,9 +38,11 @@
             },
             saveDeck() {
                 var thisVue = this;
-                let objectDeck = { description: this.description, User: { id: this.$store.myUser.id}};                
+                let objectDeck = { description: this.description, User: { id: this.$store.myUser.id } };
+                this.saving = true;
                 api.saveDeck(objectDeck).then(d => {
                     thisVue.description = "";
+                    this.saving = false;
                     thisVue.$emit("deck-saved", d);
                 });
             }

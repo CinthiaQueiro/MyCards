@@ -11,7 +11,7 @@
                 <button href="#" @click="showAnswer" class="btn btn-primary">{{$localizer('mostrarresposta')}}</button>
             </div>
         </div>
-        <div v-if="!showCard && card != null" class="card p-3" style="width: 98%;">
+        <div v-if="!showCard && card != null" class="card p-3 animate__animated animate__zoomInDown" style="width: 98%;">
             <img v-if="card.idTypeAnswer == 2" :src=card.dataAnswer class="card-img-top">
             <audio controls v-else-if="card.idTypeAnswer == 3" :key="card.dataAnswer">
                 <source v-bind:src="card.dataAnswer" type="audio/mp3" />

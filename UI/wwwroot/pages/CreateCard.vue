@@ -83,11 +83,12 @@
             <img class="attachmentimg" :src="dataAnswer" />
         </div>
 
-        <div class="saveCard" >
+        <div class="saveCard">
             <button class="btn btn-primary">
                 <router-link to="/DeckCards">Voltar</router-link>
             </button>
-            <button v-show="dataQuestion != '' && dataAnswer != '' && deckCard != ''" class="btn btn-success" @click="saveCard">Salvar</button>
+            <button v-show="dataQuestion != '' && dataAnswer != '' && deckCard != '' && !saving" class="btn btn-success" @click="saveCard">Salvar</button>
+            <div v-show="saving" class="fw-bold saving"><i class="icon-spinner"><span>{{$localizer('saving')}}...</span></i></div>
         </div>
 
         <ul class="optionsAttachment list-group" @mouseleave="closeOptions">
@@ -125,7 +126,8 @@ module.exports = {
         audioChunks: [],
         pulse: false,
         audioQuestionUrl: "",
-        audioAnwserUrl: ""
+        audioAnwserUrl: "",
+        saving: false
     };
   },
   computed: {
@@ -335,7 +337,9 @@ module.exports = {
           objectCard.DateShow = moment().format("YYYY-MM-DD HH:mm:ss");
           objectCard.Order = 1;
           objectCard.IdClassification = 1;
+          this.saving = true;
           api.saveCard(objectCard).then(c => {
+              this.saving = false;
               if (c.isSuccess) {
                   setTimeout(() => { window.location.href = `/#/DeckCards` }, 2000);
                   app.$notyf.success(app.$localizer("cardsaved"));
