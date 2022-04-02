@@ -5,7 +5,7 @@
                 <img src="../images/deck_cards3.png" /><label class="titlesite">My Cards</label>
             </div>
             <div class="col col-12 p-2 m-2 login">
-                <div id="g-signin2" data-theme="dark"></div>
+                <button class="btn btn-primary p-1"  id="g-signin2" data-theme="dark"><i class="icon-google"></i>Login via Google</button>
                 <button class="btn btn-primary p-1" style="display:none">
                     <router-link to="/loginEmail">{{$localizer('tentarEmail')}}</router-link>
                 </button>
@@ -21,44 +21,10 @@
 module.exports = {
   data: function () {
     return {
+        auth2: null
     };
   }, 
   methods: {
-      onSuccess(googleUser) {
-          // Useful data for your client-side scripts:
-          var profile = googleUser.getBasicProfile();
-          console.log("ID: " + profile.getId()); // Don't send this directly to your server!
-          console.log('Full Name: ' + profile.getName());
-          console.log('Given Name: ' + profile.getGivenName());
-          console.log('Family Name: ' + profile.getFamilyName());
-          console.log("Image URL: " + profile.getImageUrl());
-          console.log("Email: " + profile.getEmail());
-
-          // The ID token you need to pass to your backend:
-          var id_token = googleUser.getAuthResponse().id_token;
-          console.log("ID Token: " + id_token);
-          var user = { Name: profile.getName(), Email: profile.getEmail() };
-          this.$store.myUser = user;
-          this.$store.loadUser = true;
-          var thisVue = this;
-          api.saveLogin(this.$store.myUser).then(s => {
-              if (s.isSuccess) {
-                  thisVue.$actions.setCache("user", s.data);
-                  thisVue.$store.myUser = s.data;
-                  thisVue.$router.push("/deckCards");
-              }
-          });
-      },
-      onFailure() {
-          console.log("signOut");
-          var auth2 = gapi.auth2.getAuthInstance();
-          var thisVue = this;
-          auth2.signOut().then(function () {
-              console.log('User signed out.');
-              auth2.disconnect();
-              window.location.href = websiteUrl;
-          });
-      },
       loginTest() {
           var user = { Name: "User teste", Email: "userteste@teste.com" };
           this.$store.myUser = user;
@@ -71,16 +37,39 @@ module.exports = {
                   thisVue.$router.push("/deckCards");
               }
           });
+      },
+      attachSignin(element) {
+          var thisVue = this;
+          this.auth2.attachClickHandler(element, {},
+              function (googleUser) {
+                  var profile = googleUser.getBasicProfile();
+                  // The ID token you need to pass to your backend:
+                  var id_token = googleUser.getAuthResponse().id_token;
+                  var user = { Name: profile.getName(), Email: profile.getEmail() };
+                  app.store.myUser = user;
+                  app.store.loadUser = true;
+                  api.saveLogin(app.store.myUser).then(s => {
+                      if (s.isSuccess) {
+                          app.$actions.setCache("user", s.data);
+                          app.store.myUser = s.data;
+                          app.$router.push("/deckCards");
+                      }
+                  });
+              }, function (error) {
+                  alert(JSON.stringify(error, undefined, 2));
+              });
       }
   },
     mounted() {
         var thisVue = this;
-        gapi.signin2.render('g-signin2', {
-            'scope': 'profile email',            
-            'theme': 'dark',
-            'onsuccess': thisVue.onSuccess,
-            'onfailure': thisVue.onFailure
-        });
+        gapi.load('auth2', function () {
+            // Retrieve the singleton for the GoogleAuth library and set up the client.
+            thisVue.auth2 = gapi.auth2.init({
+                client_id: '1004139561983-jnk68700g5lr2qdfcl0bhlci4um78jeq.apps.googleusercontent.com',            
+                scope: 'profile'
+            });
+            thisVue.attachSignin(document.getElementById('g-signin2'));
+        });       
     }
 }
 </script>
@@ -114,5 +103,8 @@ module.exports = {
     .login {
         display: flex;
         justify-content: flex-start;
+    }
+    .icon-google {
+        margin-right: 5px;
     }
 </style>

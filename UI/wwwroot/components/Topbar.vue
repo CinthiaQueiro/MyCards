@@ -37,16 +37,16 @@
 		},
 		methods: {
 			signOut() {
+                this.$store.loadUser = false;
+                this.$store.myUser = null;
+                this.$actions.setCache("user", null);
 				if (gapi.auth2 != undefined) {
 					var auth2 = gapi.auth2.getAuthInstance();
                     auth2.signOut().then(function () {
                         console.log('User signed out.');
                     });
-				}
-                this.$store.loadUser = false;
-                this.$store.myUser = null;
-                this.$actions.setCache("user", null);
-                window.location.href = websiteUrl + "/#/login";				
+				}               
+				window.location.href = websiteUrl;
             }
         }
 	}
