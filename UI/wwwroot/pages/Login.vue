@@ -5,7 +5,7 @@
                 <img src="../images/deck_cards3.png" /><label class="titlesite">My Cards</label>
             </div>
             <div class="col col-12 p-2 m-2 login">
-                <button class="btn btn-primary p-1"  id="g-signin2" data-theme="dark"><i class="icon-google"></i>Login via Google</button>
+                <button class="btn btn-primary p-1" :disabled="buttonDisabled" id="g-signin2" data-theme="dark"><i class="icon-google"></i>Login via Google</button>
                 <button class="btn btn-primary p-1" style="display:none">
                     <router-link to="/loginEmail">{{$localizer('tentarEmail')}}</router-link>
                 </button>
@@ -21,7 +21,8 @@
 module.exports = {
   data: function () {
     return {
-        auth2: null
+        auth2: null,
+        buttonDisabled: true
     };
   }, 
   methods: {
@@ -69,6 +70,7 @@ module.exports = {
                 scope: 'profile'
             });
             thisVue.attachSignin(document.getElementById('g-signin2'));
+            thisVue.buttonDisabled = false;
         });       
     }
 }
