@@ -15,6 +15,7 @@ const router = new VueRouter({
 	routes: [
 		{
 			path: '/', component: httpVueLoader('pages/Route.vue'), children: [
+				{ path: '/', name: 'loginroot', component: httpVueLoader('pages/Login.vue') },
 				{ path: '/login', name: 'login', component: httpVueLoader('pages/Login.vue') },
 				{ path: '/deckCards', name: "decks", component: httpVueLoader('pages/DeckCard.vue') },
 				{ path: '/createCard', name: "createCard", component: httpVueLoader('pages/CreateCard.vue') },
