@@ -28,5 +28,6 @@
   "createcard": "Criar Baralho",
   "nome": "Nome",
   "fechar": "Fechar",
-  "salvar": "Salvar"
+  "salvar": "Salvar",
+  "tamanholimite": "A imagem ultrapassou o tamanho permitido."
 }

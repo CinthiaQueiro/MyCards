@@ -28,5 +28,6 @@
   "createcard": "Create Deck",
   "nome": "Name",
   "fechar": "Close",
-  "salvar": "Salvar"
+  "salvar": "Salvar",
+  "tamanholimite": "The image has exceeded the allowed size."
 }
