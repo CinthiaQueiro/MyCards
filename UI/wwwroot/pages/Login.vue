@@ -5,7 +5,7 @@
                 <img src="../images/deck_cards3.png" /><label class="titlesite">My Cards</label>
             </div>
             <div class="col col-12 p-2 m-2 login">
-                <button class="btn btn-primary p-1" :disabled="buttonDisabled" id="g-signin2" data-theme="dark"><i class="icon-google"></i>Login via Google</button>                
+                <button class="btn btn-primary p-1" :disabled="buttonDisabled" id="signin" data-theme="dark"><i class="icon-google"></i>Login via Google</button>                
                 <button class="btn btn-primary p-1" @click="loginTest">
                     {{$localizer('usuarioteste')}}
                 </button>
@@ -66,7 +66,7 @@ module.exports = {
                 client_id: '1004139561983-jnk68700g5lr2qdfcl0bhlci4um78jeq.apps.googleusercontent.com',            
                 scope: 'profile'
             });
-            thisVue.attachSignin(document.getElementById('g-signin2'));
+            thisVue.attachSignin(thisVue.$refs.signin);
             thisVue.buttonDisabled = false;
         });       
     }
