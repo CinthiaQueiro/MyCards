@@ -5,9 +5,9 @@
                 <img src="../images/deck_cards3.png" /><label class="titlesite">My Cards</label>
             </div>
             <div class="col col-12 p-2 m-2 login">
-                <button class="btn btn-primary p-1" :disabled="buttonDisabled" id="signin" data-theme="dark"><i class="icon-google"></i>Login via Google</button>                
+                <button class="btn btn-primary p-1"  ref="signin" data-theme="dark"><i class="icon-google"></i>Login via Google</button>                
                 <button class="btn btn-primary p-1" @click="loginTest">
-                    {{$localizer('usuarioteste')}}
+                    {{textUserTest}}
                 </button>
             </div>
         </div>
@@ -19,7 +19,8 @@ module.exports = {
   data: function () {
     return {
         auth2: null,
-        buttonDisabled: true
+        buttonDisabled: true,
+        textUserTest: this.$localizer("usuarioteste") || "Login com usuário teste"
     };
   }, 
   methods: {
@@ -59,7 +60,7 @@ module.exports = {
       }
   },
     mounted() {
-        var thisVue = this;
+        var thisVue = this;       
         gapi.load('auth2', function () {
             // Retrieve the singleton for the GoogleAuth library and set up the client.
             thisVue.auth2 = gapi.auth2.init({
@@ -68,7 +69,7 @@ module.exports = {
             });
             thisVue.attachSignin(thisVue.$refs.signin);
             thisVue.buttonDisabled = false;
-        });       
+        });  
     }
 }
 </script>

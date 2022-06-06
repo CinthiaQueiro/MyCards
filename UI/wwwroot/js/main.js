@@ -42,8 +42,8 @@ router.beforeEach(async (to, from, next) => {
 var app = new Vue({
 	el: '#app',
 	router: router,
-	async created() {
+	created() {
 		store.language = 'pt-br';
-		this.$localizer.loadFile(store.language);		
+		this.$localizer.loadFile(store.language);
 	}
 });

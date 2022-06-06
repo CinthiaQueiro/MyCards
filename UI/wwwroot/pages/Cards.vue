@@ -18,10 +18,13 @@
                 seu navegador não suporta HTML5
             </audio>
             <label v-else>{{card.dataAnswer}}</label>
-            <div class="card-body">
+            <div v-show="!saving" class="card-body">
                 <button @click="setDateShow('easy')" class="btn btn-success">{{$localizer('facil')}} - {{timeRepeat("easy")}}</button>
                 <button @click="setDateShow('medium')" class="btn btn-primary">{{$localizer('medio')}} - {{timeRepeat("medium")}}</button>
                 <button @click="setDateShow('hard')" class="btn btn-danger">{{$localizer('dificil')}} -  {{timeRepeat("hard")}}</button>
+            </div>
+            <div v-show="saving" class="fw-bold saving">
+                <i class="icon-spinner"><span>{{$localizer('salvando')}}...</span></i>
             </div>
         </div>
         <button class="btn btn-primary turnback">
@@ -37,7 +40,8 @@ module.exports = {
         card: null,
         showCard: true,
         listCards:[],
-        indice: 0
+        indice: 0,
+        saving: false
     };
   },
   methods: {
@@ -71,10 +75,12 @@ module.exports = {
       setDateShow(typeCard) {
           var time = this.card.classification.find(c => { return c.description == typeCard });
           var thisVue = this;
+          thisVue.saving = true;
           this.card.dateShow = moment()
               .add(time.repeatTime, time.type).format("YYYY-MM-DD HH:mm:ss");
           this.card.idClassification = time.id;
           api.updateCard(this.card).then(c => {
+              thisVue.saving = false;
               if (c.isSuccess) {
                   thisVue.indice++;
                   if (thisVue.listCards[thisVue.indice] != undefined) {

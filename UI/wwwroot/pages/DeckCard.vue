@@ -8,7 +8,7 @@
                   <div v-show="idDeskCardEdit == card.id && !saving" class="input-group mb-6">
                       <input @keyup="editDeckCard(card)" v-model="card.description" type="text" class="form-control" value="card.description" placeholder="Description" aria-label="Username" aria-describedby="basic-addon1">
                   </div>
-                  <div v-show="idDeskCardEdit == card.id && saving" class="fw-bold saving"><i class="icon-spinner"><span>{{$localizer('saving')}}...</span></i></div>
+                  <div v-show="idDeskCardEdit == card.id && saving" class="fw-bold saving"><i class="icon-spinner"><span>{{$localizer('salvando')}}...</span></i></div>
               </div>
               <span class="badge bg-success rounded-pill" :title="$localizer('facil')">{{card.easy}}</span>
               <span class="badge bg-primary rounded-pill" :title="$localizer('medio')">{{card.medium}}</span>
