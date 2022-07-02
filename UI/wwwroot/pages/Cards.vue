@@ -77,15 +77,16 @@ module.exports = {
           var thisVue = this;
           thisVue.saving = true;
           this.card.dateShow = moment()
-              .add(time.repeatTime, time.type).format("YYYY-MM-DD HH:mm:ss");
+              .add(time.repeatTime, time.type).utc().format("YYYY-MM-DD HH:mm:ss");
           this.card.idClassification = time.id;
+
           api.updateCard(this.card).then(c => {
               thisVue.saving = false;
               if (c.isSuccess) {
                   thisVue.indice++;
                   if (thisVue.listCards[thisVue.indice] != undefined) {
-                      thisVue.showAnswer();
                       thisVue.card = thisVue.listCards[thisVue.indice];
+                      thisVue.showAnswer();
                   } else {
                       window.location.href = `/#/DeckCards`;
                   }
