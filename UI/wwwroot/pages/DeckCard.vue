@@ -85,7 +85,7 @@ module.exports = {
               });
       },
       openListCards() {
-          const deck = this.deckCards.find(d => d.id == idDeskCardEdit);
+          const deck = this.deckCards.find(d => d.id == this.idDeskCardEdit);
           if (deck.easy == 0 && deck.hard == 0 && deck.medium == 0) {
               app.$notyf.success(app.$localizer("Não existem cards nesse baralho para estudar agora."));
           } else {
