@@ -85,7 +85,12 @@ module.exports = {
               });
       },
       openListCards() {
-          window.location.href = `/#/Cards/${this.idDeskCardEdit}`;
+          const deck = this.deckCards.find(d => d.id == idDeskCardEdit);
+          if (deck.easy == 0 && deck.hard == 0 && deck.medium == 0) {
+              app.$notyf.success(app.$localizer("Não existem cards nesse baralho para estudar agora."));
+          } else {
+              window.location.href = `/#/Cards/${this.idDeskCardEdit}`;
+          }
       },
       deckCardEdit(event, id) {
           this.idDeskCardEdit = id;
